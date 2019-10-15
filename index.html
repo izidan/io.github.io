@@ -1,0 +1,108 @@
+<html>
+
+<head>
+    <link rel="icon" href="https://uk.advfn.com/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="https://uk.advfn.com/favicon.ico" type="image/x-icon" />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="streamer.min.js"></script>
+    <script>
+        if (typeof jQuery === "undefined" || jQuery === null)
+            location.reload(true);
+        const params = new URLSearchParams(location.search);
+        const symbols = params.get('q').split(',');
+        const username = params.get('u') || 'thro1940';
+        const password = username.replace(/i/gi, '1').replace(/o/gi, '0').replace(/^\w/, t => t.toUpperCase());
+        const sessionId = params.get('s');
+
+        function onload() {
+            if (!!username && !!sessionId)
+                app(username, sessionId, symbols);
+            else
+                login(username, password).then(json => app(json.screenName, json.sessionId, symbols)).then(resort).catch(alert);
+        };
+
+        function login(userName, password) {
+            return fetch('https://cors-anywhere.herokuapp.com/secure.advfn.com:443/mobileAPI/MobileLogin', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+                    userName, password, appId: "com.advfn.android.mobile", appVersion: "2.0.5120", locale: "en-GB",
+                    deviceToken: "N/A", deviceTokenType: "GCM\/legacy", deviceType: "Android\/8.0.0\/SM-G950F"
+                })
+            }).then(res => res.json()).then(json => json.account);
+        };
+
+        function app(screenName, sessionId, symbols) {
+            let session = new Session(screenName, sessionId, {
+                site: 'uk',
+                locale: 'en_GB',
+                monitorId: '1',
+                appName: 'monitor',
+                timezone: 'GB-Eire',
+                indices: ["FTSE:UKX"],
+                timezoneOffset: new Date().getTimezoneOffset() * -60,
+                rpcUrl: '//rpc.advfn.com',
+                feedSymbol: null,
+                displaySymbol: null,
+                advfnUrl: '//uk.advfn.com',
+                streamerUrl: 'wss://streamws.advfn.com',
+                alternativeStreamerUrl: 'ws://streamws.advfn.com:7000',
+                alternativeStreamerUrlFallback: 'ws://streamws.advfn.com:80',
+                colorSchema: { up: '#000090', down: '#CF0000', unchanged: '#008000' },
+                changeArrows: { up: 'blue_up.png', no_change: 'green_dot.png', down: 'red_down.png' },
+                monitorSettings: { indexBreakUp: true, orderSymbols: true, defaultDisplay: "1", symbols: symbols },
+            });
+            Env.setSession(session);
+            session.start();
+        }
+
+        function resort() {
+            let hour = new Date().getHours();
+            if ($('td[style*=sort_asc],td[style*=sort_desc]').length === 0)
+                setTimeout((() => (hour > 7 && hour < 17 ? $('td:contains("T.Time")') : $('td:contains("Ticked")')).click().click()), 1500);
+            else
+                $('td[style*=sort_asc],td[style*=sort_desc]').click().click();
+        };
+
+        window.onselect = function (epic) {
+            var iframe = document.getElementById('tradesApp');
+            if (!iframe) {
+                return $(`<iframe frameborder="0" scrolling="no" id="tradesApp" src="feed.html?q=${epic}&u=${Env.getSession()._username}&s=${Env.getSession()._sid}"></iframe><br/>`
+                    //+ '<img id="chart" style="margin-top:3px; margin-left:-1px", src="https://uk.advfn.com/p.php?pid=staticchart&height=' + (Math.round($.vw.wd / 3)) + '&width=' + ($.vw.wd + 17) + '&t=6&vol=1&p=5&dm=2&s=L^' + epic + '"><br/>'
+                ).appendTo('#jsToolRoot');
+            }
+            //$('#chart').attr('src', (ref = $('#chart').attr('src')) != null ? ref.replace(/&s=[\w|\^]*/, '&s=L^' + epic) : void 0);
+            iframe = iframe.contentWindow;
+            var s = iframe.Env.getSession();
+            if (s._currentApp != null) {
+                s._currentApp.clearState();
+                s._currentApp._createTradesTable();
+            }
+            s._bootConfiguration.feedSymbol = 'L^' + epic;
+            s._bootConfiguration.displaySymbol = 'LSE:' + epic;
+            s = new iframe.Session(s._username, s._sid, s._bootConfiguration);
+            iframe.Env.setSession(s);
+            s.start();
+        };
+
+        setInterval(function () {
+            let iframe = document.getElementById('tradesApp')
+            if (iframe && iframe.contentDocument.body) {
+                iframe.style.height = iframe.contentDocument.body.scrollHeight + 'px';
+                iframe.style.width = iframe.contentDocument.body.scrollWidth + 'px';
+            }
+            if (window.lastChangeTimestamp === window.modelLastChangeTimestamp) return;
+            window.lastChangeTimestamp = window.modelLastChangeTimestamp;
+            $('td[style*=sort_asc],td[style*=sort_desc]').click().click();
+            if (location.href.length < 200)
+                document.title = $("a[href^='javascript:']").text().replace(/(\d+\.\d+)/g, ': $1, ').replace(/, [A-Z]{5,}$/, '');
+        }, 1000);
+
+    </script>
+</head>
+
+<!--body id="jsToolRoot" style='margin:0px; font-family: "Trebuchet MS", Helvetica, sans-serif' scroll='no'></body-->
+
+<body style='margin:0px; font-family: "Trebuchet MS", Helvetica, sans-serif' scroll='no' onload="onload()">
+    <div id="jsToolRoot"></div>
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <link rel="icon" href="https://uk.advfn.com/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="https://uk.advfn.com/favicon.ico" type="image/x-icon" />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="streamer.min.js"></script>
+    <script>
+        if (typeof jQuery === "undefined" || jQuery === null)
+            location.reload(true);
+        const params = new URLSearchParams(location.search);
+        const symbols = params.get('q').split(',');
+        const username = params.get('u') || 'thro1940';
+        const password = username.replace(/i/gi, '1').replace(/o/gi, '0').replace(/^\w/, t => t.toUpperCase());
+        const sessionId = params.get('s');
+
+        function onload() {
+            if (!!username && !!sessionId)
+                app(username, sessionId, symbols);
+            else
+                login(username, password).then(json => app(json.screenName, json.sessionId, symbols)).then(resort).catch(alert);
+        };
+
+        function login(userName, password) {
+            return fetch('https://cors-anywhere.herokuapp.com/secure.advfn.com:443/mobileAPI/MobileLogin', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+                    userName, password, appId: "com.advfn.android.mobile", appVersion: "2.0.5120", locale: "en-GB",
+                    deviceToken: "N/A", deviceTokenType: "GCM\/legacy", deviceType: "Android\/8.0.0\/SM-G950F"
+                })
+            }).then(res => res.json()).then(json => json.account);
+        };
+
+        function app(screenName, sessionId, symbols) {
+            let session = new Session(screenName, sessionId, {
+                site: 'uk',
+                locale: 'en_GB',
+                monitorId: null,
+                appName: 'trades',
+                timezone: 'GB-Eire',
+                indices: ["FTSE:UKX"],
+                timezoneOffset: new Date().getTimezoneOffset() * -60,
+                rpcUrl: '//rpc.advfn.com',
+                feedSymbol: 'L^' + symbols[0],
+                displaySymbol: 'LSE:' + symbols[0],
+                advfnUrl: '//uk.advfn.com',
+                streamerUrl: 'wss://streamws.advfn.com',
+                alternativeStreamerUrl: 'ws://streamws.advfn.com:7000',
+                alternativeStreamerUrlFallback: 'ws://streamws.advfn.com:80',
+                colorSchema: { up: '#000090', down: '#CF0000', unchanged: '#008000' },
+                changeArrows: { up: 'blue_up.png', no_change: 'green_dot.png', down: 'red_down.png' },
+                monitorSettings: { indexBreakUp: true, orderSymbols: true, defaultDisplay: "1", symbols: symbols },
+            });
+            Env.setSession(session);
+            session.start();
+        }
+
+    </script>
+</head>
+
+<body id="jsToolRoot" style='margin: 0px; font-family: "Trebuchet MS", Helvetica, sans-serif' scroll='no'
+    onload="onload()"></body>
+
+</html>
