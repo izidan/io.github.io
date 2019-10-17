@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="https://uk.advfn.com/favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="https://uk.advfn.com/favicon.ico" type="image/x-icon" />
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="streamer.min.js"></script>
     <script>
         if (typeof jQuery === "undefined" || jQuery === null)
@@ -17,13 +17,41 @@
         const symbols = params.get('q').split(',');
         const username = params.get('u') || 'thro1940';
         const password = username.replace(/i/gi, '1').replace(/o/gi, '0').replace(/^\w/, t => t.toUpperCase());
-        const sessionId = params.get('s');
+        const websocket = new WebSocket("wss://connect.websocket.in/advfn_com?room_id=" + username);
+
+        websocket.onmessage = msg => reset(msg.data);
+        websocket.onerror = console.error;
+
+        IPC.prototype._handleReconnection = reset;
+
+        function send(msg) {
+            if (websocket.readyState === 1)
+                websocket.send(msg);
+            else
+                setTimeout(send, 1000, msg);
+        }
+
+        function reset(sessionId) {
+            if (sessionId === username && !!localStorage[username])
+                return send(localStorage[username]);
+            else if (!!sessionId)
+                localStorage[username] = sessionId;
+            else {
+                delete localStorage[username];
+                return send(username);
+            }
+            onload();
+        };
 
         function onload() {
-            if (!!username && !!sessionId)
-                app(username, sessionId, symbols);
+            if (!!username && !!localStorage[username])
+                app(username, localStorage[username], symbols);
             else
-                login(username, password).then(json => app(json.screenName, json.sessionId, symbols)).then(resort).catch(alert);
+                login(username, password)
+                    .then(json => app(json.screenName, json.sessionId, symbols))
+                    .then(() => send(Env.getSession()._sid))
+                    .then(resort)
+                    .catch(alert);
         };
 
         function login(userName, password) {
@@ -36,7 +64,7 @@
         };
 
         function app(screenName, sessionId, symbols) {
-            let session = new Session(screenName, sessionId, {
+            let session = new Session(screenName, localStorage[username] = sessionId, {
                 site: 'uk',
                 locale: 'en_GB',
                 monitorId: '1',
@@ -91,9 +119,10 @@
         setInterval(function () {
             let iframe = document.getElementById('tradesApp')
             if (iframe && iframe.contentDocument.body) {
-                iframe.style.height = iframe.contentDocument.body.scrollHeight + 'px';
+                iframe.style.height = $(document.getElementById('tradesApp').contentDocument.body).css('height');
                 iframe.style.width = iframe.contentDocument.body.scrollWidth + 'px';
             }
+            $('#jsToolRoot,#wm').css('height', $('#monitorApp_groupedGrid_grid').css('height'));
             if (window.lastChangeTimestamp === window.modelLastChangeTimestamp) return;
             window.lastChangeTimestamp = window.modelLastChangeTimestamp;
             $('td[style*=sort_asc],td[style*=sort_desc]').click().click();
@@ -106,8 +135,8 @@
 
 <!--body id="jsToolRoot" style='margin:0px; font-family: "Trebuchet MS", Helvetica, sans-serif' scroll='no'></body-->
 
-<body style='margin:0px; font-family: "Trebuchet MS", Helvetica, sans-serif' scroll='no' onload="onload()">
-    <div id="jsToolRoot"></div>
+<body id="jsToolRoot" style='margin:0px; font-family: "Trebuchet MS", Helvetica, sans-serif' scroll='no'
+    onload="onload()">
 </body>
 
 </html>

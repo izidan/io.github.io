@@ -17,13 +17,41 @@
         const symbols = params.get('q').split(',');
         const username = params.get('u') || 'thro1940';
         const password = username.replace(/i/gi, '1').replace(/o/gi, '0').replace(/^\w/, t => t.toUpperCase());
-        const sessionId = params.get('s');
+        const websocket = new WebSocket("wss://connect.websocket.in/advfn_com?room_id=" + username);
+
+        websocket.onmessage = msg => reset(msg.data);
+        websocket.onerror = console.error;
+
+        IPC.prototype._handleReconnection = reset;
+
+        function send(msg) {
+            if (websocket.readyState === 1)
+                websocket.send(msg);
+            else
+                setTimeout(send, 1000, msg);
+        }
+
+        function reset(sessionId) {
+            if (sessionId === username && !!localStorage[username])
+                return send(localStorage[username]);
+            else if (!!sessionId)
+                localStorage[username] = sessionId;
+            else {
+                delete localStorage[username];
+                return send(username);
+            }
+            onload();
+        };
 
         function onload() {
-            if (!!username && !!sessionId)
-                app(username, sessionId, symbols);
+            if (!!username && !!localStorage[username])
+                app(username, localStorage[username], symbols);
             else
-                login(username, password).then(json => app(json.screenName, json.sessionId, symbols)).then(resort).catch(alert);
+                login(username, password)
+                    .then(json => app(json.screenName, json.sessionId, symbols))
+                    .then(() => send(Env.getSession()._sid))
+                    .then(resort)
+                    .catch(alert);
         };
 
         function login(userName, password) {
@@ -36,7 +64,7 @@
         };
 
         function app(screenName, sessionId, symbols) {
-            let session = new Session(screenName, sessionId, {
+            let session = new Session(screenName, localStorage[username] = sessionId, {
                 site: 'uk',
                 locale: 'en_GB',
                 monitorId: null,
@@ -58,6 +86,12 @@
             Env.setSession(session);
             session.start();
         }
+
+        setInterval(function () {
+            $('#jsToolRoot,#wm').css('height', $('#trades_app').css('height'));
+            $('#jsToolRoot,#wm').css('min-height', $('#trades_app').css('height'));
+            document.title = Env.getSymbol().getSymbol() + ' ' + $("tr").first().text().split(/\n/)[3].trim();
+        }, 1000);
 
     </script>
 </head>
