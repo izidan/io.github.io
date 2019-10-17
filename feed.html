@@ -90,7 +90,7 @@
         setInterval(function () {
             $('#jsToolRoot,#wm').css('height', $('#trades_app').css('height'));
             $('#jsToolRoot,#wm').css('min-height', $('#trades_app').css('height'));
-            document.title = Env.getSymbol().getSymbol() + ' ' + $("tr").first().text().split(/\n/)[3].trim();
+            document.title = Env.getSymbol().getSymbol() + ' ' + $("tr").first().text().split(/\n/)[3];
         }, 1000);
 
     </script>
