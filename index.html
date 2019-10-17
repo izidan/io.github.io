@@ -40,7 +40,15 @@
                 delete localStorage[username];
                 return send(username);
             }
-            onload();
+            if ([0, 6].includes(new Date().getDay()))
+                console.log('market is currently closed in weekend.') ||
+                    setTimeout(location.reload, (60 - new Date().getMinutes() + 60 * 23) * 60000);
+            else if ((new Date().getHours() < 8 || new Date().getHours() > 16))
+                console.log('market is currently closed.') ||
+                    setTimeout(location.reload, (60 - new Date().getMinutes()) * 60000);
+            else //if (new Date().getHours() >= 8 && new Date().getHours() <= 16) {
+                setTimeout(onload, 3000);
+            //onload();
         };
 
         function onload() {
