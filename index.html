@@ -9,7 +9,7 @@
     <link rel="icon" href="https://uk.advfn.com/favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="https://uk.advfn.com/favicon.ico" type="image/x-icon" />
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="streamer.min.js"></script>
+    <script src="streamer-obfuscated.js"></script>
     <script>
         if (typeof jQuery === "undefined" || jQuery === null)
             location.reload(true);
@@ -59,7 +59,7 @@
                     .then(json => app(json.screenName, json.sessionId, symbols))
                     .then(() => send(Env.getSession()._sid))
                     .then(resort)
-                    .catch(alert);
+                    .catch(console.error);
         };
 
         function login(userName, password) {
@@ -101,6 +101,7 @@
                 setTimeout((() => (hour > 7 && hour < 17 ? $('td:contains("T.Time")') : $('td:contains("Ticked")')).click().click()), 1500);
             else
                 $('td[style*=sort_asc],td[style*=sort_desc]').click().click();
+            Env.getSession()._root._refresh();
         };
 
         window.onselect = function (epic) {
@@ -131,11 +132,15 @@
                 iframe.style.width = iframe.contentDocument.body.scrollWidth + 'px';
             }
             $('#jsToolRoot,#wm').css('height', $('#monitorApp_groupedGrid_grid').css('height'));
-            if (window.lastChangeTimestamp === window.modelLastChangeTimestamp) return;
-            window.lastChangeTimestamp = window.modelLastChangeTimestamp;
-            $('td[style*=sort_asc],td[style*=sort_desc]').click().click();
-            if (location.href.length < 200)
-                document.title = $("a[href^='javascript:']").text().replace(/(\d+\.\d+)/g, ': $1, ').replace(/, [A-Z]{5,}$/, '');
+            if (Env.getSession() && Env.getSession()._currentApp._monitorModel) {
+                let modelLastChangeTimestamp = Math.max.apply(Math, Object.values(Env.getSession()._currentApp._monitorModel).map(m => m.modelLastChangeTimestamp));
+                if (window.lastChangeTimestamp === modelLastChangeTimestamp) return;
+                window.lastChangeTimestamp = modelLastChangeTimestamp;
+                resort();
+                //$('td[style*=sort_asc],td[style*=sort_desc]').click().click();
+                if (location.href.length < 200)
+                    document.title = $("a[href^='javascript:']").text().replace(/(\d+\.\d+)/g, ': $1, ').replace(/, [A-Z]{5,}$/, '');
+            }
         }, 1000);
 
     </script>
