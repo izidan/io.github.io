@@ -241,15 +241,6 @@
     }
   };
   // #endregion
-  /*
-  this.document.onclick = function(e) {
-    if (!e || !e.srcElement) return;
-    if (e && e.srcElement && e.srcElement.tagName != "IMG" && e.srcElement.tagName != "A")
-      Env && Env.getSession() && Env.getSession()._root._refresh();
-    else if (e && e.srcElement && e.srcElement.tagName != "A")
-      e.handled = console.log(e) || true;
-  };
-  */
   // #region Grouping
   this.Grouping = Grouping;
   function Grouping(a) {
@@ -1268,7 +1259,7 @@
     this.isConnected() ? (console.error("IPC error detected on " + a.target.url), this.onError()) : (console.error("IPC connection error detected on " + a.target.url), this.onConnectionError())
   };
   IPC.prototype._handleOpen = function (a) {
-    console.info("Opened the connection to the web sockets streamer: " + a.target.url);
+    //console.info("Opened the connection to the web sockets streamer: " + a.target.url);
     this.setConnected(!0);
     this._connectionAttempts = 0;
     this._reconnectionTimeout = 500
@@ -4071,7 +4062,7 @@
     this.add(this._table);
     this._ready = !1;
     this._firstLoad = !0;
-    //RootComponent.setMinHeight(300);
+    RootComponent.setMinHeight(30);
   };
   TradesExtendedTable.prototype = Object.create(Component.prototype);
   TradesExtendedTable.prototype.constructor = TradesExtendedTable;
@@ -4270,7 +4261,7 @@
         var c = this._symbolsList.getRowBySymbol(this._monitorModel[a].symbol),
           d = 0 === c % 2 ? Color.MONITOR_ROW_EVEN : Color.MONITOR_ROW_ODD;
         Clock.TIMESTAMP - this._monitorModel[a].modelLastChangeTimestamp < MonitorApp.ANIMATION_SEQUENCE_DEFAULT[0].time && (d = Color.UPDATED);
-        this._autoHighlight(c, d);
+        //this._autoHighlight(c, d);
       }
     this._drawDimensions && (this._drawDimensions = -1 === this._groupedGrid.getTableHeight() || -1 === this._groupedGrid.getTableWidth(), this._drawDimensions || (b = this._groupedGrid.getTableHeight(), a = this._groupedGrid.getTableWidth(), b += MonitorApp.BOTTOM_OFFSET, this._rootComponent = Utils.fetchParent(this, RootComponent), this._rootComponent.setHeight(b), this._rootComponent.setWidth(a), this.setBounds(this._x, this._y, a, b), this._manager.setSize(this._width, this._height)));
     this._drawNewWidths && (this._drawNewWidths = -1 === this._groupedGrid.getTableWidth(), this._drawNewWidths || (a = this._groupedGrid.getTableWidth(), void 0 !== this._rootComponent && this._rootComponent.setWidth(a), this.setBounds(this._x, this._y, a, this._height), this._manager.setSize(this._width, this._height)));
@@ -4521,10 +4512,6 @@
     b = this._symbolsList.getSymbolByFeedMapping(b);
     null !== b && (b = b.getFeedSymbol(), void 0 === this._monitorModel[b].cols[c] && (this._monitorModel[b].cols[c] = {}, this._monitorModel[b].cols[c].oldValue = null), this._monitorModel[b].cols[c].currentValue = a.contents,
       this._monitorModel[b].cols[c].lastChangeTime = Clock.TIMESTAMP, this._monitorModel[b].cols[c].animationStep = null, this._monitorModel[b].cols[c].flag = d, window.modelLastChangeTimestamp = this._monitorModel[b].modelLastChangeTimestamp = Clock.TIMESTAMP)
-    ///clearTimeout(this._monitorModel[b].refresh0);
-    ///this._monitorModel[b].refresh0 = setTimeout(function(model) {
-    ///  console.log('MonitorApp.prototype._handleFeed', model.symbol._symbol, model);
-    ///}, 100, this._monitorModel[b]);
   };
   MonitorApp.FLAG_UPDATE_UP_PERIOD_UNCHANGED = 0;
   MonitorApp.FLAG_UPDATE_UP_PERIOD_UP = 1;
@@ -4581,7 +4568,17 @@
     null !== e.stepNo ? (h = e.textColor, l = e.bgColor, n = e.textBold, n = void 0 === d.textBold ? n : d.textBold, l = void 0 === d.bgColor ? l : d.bgColor, h = void 0 === d.textColor ? h : d.textColor) : (n = void 0 === d.textBold ? n : d.textBold, h = void 0 === d.fixedColor ? h : d.fixedColor);
     e = c.getFeedSymbol();
     this._monitorModel[e].cols[b].oldValue = this._monitorModel[e].cols[b].currentValue;
-    this._groupedGrid.setCellStyle(k, b, l, h, n);
+    if (f !== g)
+      this._groupedGrid.setCellStyle(k, b, l, h, n);
+    else {
+      h = l;
+      if ([4, 5, 16, 17].includes(b)) {
+        h = Color.TEXT;
+        l = undefined;
+        n = false;
+        this._groupedGrid.setCellStyle(k, b, l, h, n);
+      }
+    }
     this._symbolsList.setItemStyle(c, b, h, l, n);
     return !0
   };
@@ -4785,7 +4782,7 @@
     return null !== a && void 0 !== Feed.strings[a[1]] ? (a = Feed.strings[a[1]], [Utils.trunc(a, 6), a]) : null
   };
   MonitorApp.prototype._handleCellContentTime = function (a) {
-    return "{l4}" === a ? [L("mon_traded_closed"), void 0] : [Utils.tsToTime(parseInt(a, 10)), void 0]
+    return "{l4}" === a ? [void 0, void 0] : ((a = Utils.tsToTime(parseInt(a, 10))).match(/0[0|1]:00:00/) ? ["", void 0] : [a, void 0]);
   };
   MonitorApp.prototype._handleCellContentBuySellIndex = function (a, b) {
     var c = a.split(","),

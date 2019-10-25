@@ -47,7 +47,7 @@
                 console.log('market is currently closed.') ||
                     setTimeout(location.reload, (60 - new Date().getMinutes()) * 60000);
             else //if (new Date().getHours() >= 8 && new Date().getHours() <= 16) {
-                setTimeout(onload, 3000);
+                setTimeout(location.reload, 3000);
             //onload();
         };
 
@@ -58,7 +58,6 @@
                 login(username, password)
                     .then(json => app(json.screenName, json.sessionId, symbols))
                     .then(() => send(Env.getSession()._sid))
-                    .then(resort)
                     .catch(console.error);
         };
 
@@ -96,12 +95,21 @@
         }
 
         function resort() {
+            if (!Env.getSession()) return;
+            let app = Env.getSession()._currentApp;
+            if (!app || !app._monitorModel) return;
+            let modelLastChangeTimestamp = Math.max.apply(Math, Object.values(app._monitorModel).map(m => m.modelLastChangeTimestamp));
+            if (window.lastChangeTimestamp === modelLastChangeTimestamp) return;
+            window.lastChangeTimestamp = modelLastChangeTimestamp;
             let hour = new Date().getHours();
-            if ($('td[style*=sort_asc],td[style*=sort_desc]').length === 0)
-                setTimeout((() => (hour > 7 && hour < 17 ? $('td:contains("T.Time")') : $('td:contains("Ticked")')).click().click()), 1500);
-            else
-                $('td[style*=sort_asc],td[style*=sort_desc]').click().click();
+            if (app._symbolsList._sortingColumn < 0)
+                app._symbolsList.setSortingColumn(app._cols.map(c => c._title).indexOf(hour > 7 && hour < 17 ? 'T.Time' : 'Ticked'), app._currentSorting);
+            app._groupedGrid.sortGrid();
+            app._fixStaticCells()
             Env.getSession()._root._refresh();
+            document.title = Object.values(app._monitorModel).reduce((t, c) => t + ', ' + c.symbol._name + ': ' + c.cols[4].currentValue, '').substr(2);
+            //if (location.href.length < 200)
+            //    document.title = $("a[href^='javascript:']").text().replace(/(\d+\.\d+)/g, ': $1, ').replace(/, [A-Z]{5,}$/, '');
         };
 
         window.onselect = function (epic) {
@@ -132,15 +140,7 @@
                 iframe.style.width = iframe.contentDocument.body.scrollWidth + 'px';
             }
             $('#jsToolRoot,#wm').css('height', $('#monitorApp_groupedGrid_grid').css('height'));
-            if (Env.getSession() && Env.getSession()._currentApp._monitorModel) {
-                let modelLastChangeTimestamp = Math.max.apply(Math, Object.values(Env.getSession()._currentApp._monitorModel).map(m => m.modelLastChangeTimestamp));
-                if (window.lastChangeTimestamp === modelLastChangeTimestamp) return;
-                window.lastChangeTimestamp = modelLastChangeTimestamp;
-                resort();
-                //$('td[style*=sort_asc],td[style*=sort_desc]').click().click();
-                if (location.href.length < 200)
-                    document.title = $("a[href^='javascript:']").text().replace(/(\d+\.\d+)/g, ': $1, ').replace(/, [A-Z]{5,}$/, '');
-            }
+            resort();
         }, 1000);
 
     </script>
