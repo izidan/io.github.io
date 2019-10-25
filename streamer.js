@@ -4261,7 +4261,7 @@
         var c = this._symbolsList.getRowBySymbol(this._monitorModel[a].symbol),
           d = 0 === c % 2 ? Color.MONITOR_ROW_EVEN : Color.MONITOR_ROW_ODD;
         Clock.TIMESTAMP - this._monitorModel[a].modelLastChangeTimestamp < MonitorApp.ANIMATION_SEQUENCE_DEFAULT[0].time && (d = Color.UPDATED);
-        //this._autoHighlight(c, d);
+        this._autoHighlight(c, d);
       }
     this._drawDimensions && (this._drawDimensions = -1 === this._groupedGrid.getTableHeight() || -1 === this._groupedGrid.getTableWidth(), this._drawDimensions || (b = this._groupedGrid.getTableHeight(), a = this._groupedGrid.getTableWidth(), b += MonitorApp.BOTTOM_OFFSET, this._rootComponent = Utils.fetchParent(this, RootComponent), this._rootComponent.setHeight(b), this._rootComponent.setWidth(a), this.setBounds(this._x, this._y, a, b), this._manager.setSize(this._width, this._height)));
     this._drawNewWidths && (this._drawNewWidths = -1 === this._groupedGrid.getTableWidth(), this._drawNewWidths || (a = this._groupedGrid.getTableWidth(), void 0 !== this._rootComponent && this._rootComponent.setWidth(a), this.setBounds(this._x, this._y, a, this._height), this._manager.setSize(this._width, this._height)));
@@ -4568,9 +4568,9 @@
     null !== e.stepNo ? (h = e.textColor, l = e.bgColor, n = e.textBold, n = void 0 === d.textBold ? n : d.textBold, l = void 0 === d.bgColor ? l : d.bgColor, h = void 0 === d.textColor ? h : d.textColor) : (n = void 0 === d.textBold ? n : d.textBold, h = void 0 === d.fixedColor ? h : d.fixedColor);
     e = c.getFeedSymbol();
     this._monitorModel[e].cols[b].oldValue = this._monitorModel[e].cols[b].currentValue;
-    if (f !== g)
-      this._groupedGrid.setCellStyle(k, b, l, h, n);
-    else {
+    //if (f !== g)
+    this._groupedGrid.setCellStyle(k, b, l, h, n);
+    /*else {
       h = l;
       if ([4, 5, 16, 17].includes(b)) {
         h = Color.TEXT;
@@ -4578,7 +4578,7 @@
         n = false;
         this._groupedGrid.setCellStyle(k, b, l, h, n);
       }
-    }
+    }*/
     this._symbolsList.setItemStyle(c, b, h, l, n);
     return !0
   };
