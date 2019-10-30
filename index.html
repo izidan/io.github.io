@@ -99,7 +99,8 @@
             let app = Env.getSession()._currentApp;
             if (!app || !app._monitorModel) return;
             let modelLastChangeTimestamp = Math.max.apply(Math, Object.values(app._monitorModel).map(m => m.modelLastChangeTimestamp));
-            if (window.lastChangeTimestamp === modelLastChangeTimestamp) return;
+            if (window.lastChangeTimestamp === modelLastChangeTimestamp)
+                return Env.getSession()._root._refresh();
             window.lastChangeTimestamp = modelLastChangeTimestamp;
             let hour = new Date().getHours();
             if (app._symbolsList._sortingColumn < 0)
@@ -131,7 +132,6 @@
             s = new iframe.Session(s._username, s._sid, s._bootConfiguration);
             iframe.Env.setSession(s);
             s.start();
-            document.onclick = s._root ? s._root._refresh : resort;
         };
 
         setInterval(function () {
