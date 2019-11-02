@@ -108,9 +108,9 @@
             app._groupedGrid.sortGrid();
             app._fixStaticCells()
             Env.getSession()._root._refresh();
-            document.title = Object.values(app._monitorModel).reverse().reduce((t, c) => c.cols[4] ? t + ', ' + c.symbol._name + ': ' + c.cols[4].currentValue : t, '').substr(2);
-            //if (location.href.length < 200)
-            //    document.title = $("a[href^='javascript:']").text().replace(/(\d+\.\d+)/g, ': $1, ').replace(/, [A-Z]{5,}$/, '');
+            document.title = Object.values(app._monitorModel)
+                .sort((a, b) => b.cols[app._symbolsList._sortingColumn].currentValue.localeCompare(a.cols[app._symbolsList._sortingColumn].currentValue))
+                .reduce((t, c) => c.cols[4] ? t + ', ' + c.symbol._name + ': ' + c.cols[4].currentValue : t, '').substr(2);
         };
 
         window.onselect = function (epic) {

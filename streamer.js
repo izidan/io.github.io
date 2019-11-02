@@ -4920,7 +4920,7 @@
         window.open('//uk.advfn.com/cmn/fbb/threads.php3?symbol=' + d.getSymbol(), '_blank');
         break;
       case "tweets":
-        window.open('//www.twitter.com/search?f=tweets&l=en&q=%23' + d.getSymbol(), '_blank');
+        window.open('//mobile.twitter.com/search?f=live&l=en&q=%23' + d.getSymbol(), '_blank');
         break;
       case "chats":
         window.open('//m.lse.co.uk/markets/shareprice/chat.asp?share=' + d.getSymbol(), '_blank');
