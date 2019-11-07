@@ -33,7 +33,10 @@ www.lse.co.uk###fancybox-wrap
 ||aas.advfn.com$image
 
 ! 11/6/2019 https://uk.advfn.com
-uk.advfn.com##[id^=APS_]
+uk.advfn.com##iframe
+uk.advfn.com##[id*=APS_]
+uk.advfn.com###APS_BILLBOARD
+uk.advfn.com##.APS_BILLBOARD
 uk.advfn.com###broker-widget
 uk.advfn.com##.dfpAd
 uk.advfn.com###footerbillboardAdvert
@@ -83,4 +86,10 @@ uk.advfn.com##.thread-header-menu
 uk.advfn.com##.title-container
 uk.advfn.com##.header-subhead
 uk.advfn.com##.delay-container
-uk.advfn.com###SymbolTitle
+uk.advfn.com###support_links
+uk.advfn.com##.bb-thread-unit
+uk.advfn.com##.native-container
+uk.advfn.com##.app_gdpr--2k2uB
+uk.advfn.com###smartbanner
+uk.advfn.com###afnmainbodid
+uk.advfn.com###notification-zone
