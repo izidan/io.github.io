@@ -41,7 +41,7 @@ uk.advfn.com###APS_INTERSTITIAL
 uk.advfn.com###APS_POP_UNDER2
 uk.advfn.com###APS_BREAKING_NEWS
 uk.advfn.com###APS_BILLBOARD
-uk.advfn.com##.APS_BILLBOARD
+uk.advfn.com###APS_300_X_250
 uk.advfn.com###broker-widget
 uk.advfn.com##.dfpAd
 uk.advfn.com###footerbillboardAdvert
