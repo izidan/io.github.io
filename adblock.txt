@@ -34,9 +34,9 @@ www.lse.co.uk###fancybox-wrap
 
 ! 11/6/2019 https://uk.advfn.com
 uk.advfn.com##iframe
-uk.advfn.com##[id*=APS_]
 uk.advfn.com###overlay
-uk.advfn.com###header_6830
+uk.advfn.com##[id*=APS_]
+uk.advfn.com##[id*=header_]
 uk.advfn.com###APS_INTERSTITIAL
 uk.advfn.com###APS_POP_UNDER2
 uk.advfn.com###APS_BREAKING_NEWS
@@ -96,5 +96,5 @@ uk.advfn.com##.bb-thread-unit
 uk.advfn.com##.native-container
 uk.advfn.com##.app_gdpr--2k2uB
 uk.advfn.com###smartbanner
-uk.advfn.com###afnmainbodid
 uk.advfn.com###notification-zone
+uk.advfn.com###videoAdvert
