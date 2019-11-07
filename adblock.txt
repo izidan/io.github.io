@@ -22,13 +22,19 @@ share-dealing.iwebsharedealing.co.uk##.pull-left.footer
 share-dealing.iwebsharedealing.co.uk##div.promo
 
 ! 7/4/2019 https://www.lse.co.uk
-www.lse.co.uk##.left-quick-picks__slide-button
-www.lse.co.uk###by-button-iframe
-www.lse.co.uk##.footer
-www.lse.co.uk##.wrapper-3-col-wide__left
-www.lse.co.uk##.header
-www.lse.co.uk##.top-nav
-www.lse.co.uk###fancybox-wrap
+lse.co.uk##.left-quick-picks__slide-button
+lse.co.uk###by-button-iframe
+lse.co.uk###fancybox-wrap
+lse.co.uk###fb-root
+lse.co.uk##.footer
+lse.co.uk##.wrapper-3-col-wide__left
+lse.co.uk##.header
+lse.co.uk##.top-nav
+lse.co.uk##.utility-bar
+lse.co.uk##.notice-bar
+lse.co.uk##.social-bar
+lse.co.uk##.register-bar
+lse.co.uk##.sp-action-nav
 
 ||aas.advfn.com$image
 
