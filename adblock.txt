@@ -106,3 +106,5 @@ uk.advfn.com##.app_gdpr--2k2uB
 uk.advfn.com###smartbanner
 uk.advfn.com###notification-zone
 uk.advfn.com###videoAdvert
+uk.advfn.com##.fsa-message
+uk.advfn.com##.responsive-footer
