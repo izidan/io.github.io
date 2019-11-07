@@ -9,6 +9,13 @@ twitter.com/i/js_inst*
 twitter.com/i/trends*
 twitter.com/i/promoted*
 
+! 9/27/2019 https://www.shorttracker.co.uk
+shorttracker.co.uk##.smaller.alert-warning.alert
+shorttracker.co.uk##.pull-right
+shorttracker.co.uk##.alert-success.alert
+shorttracker.co.uk###footer
+shorttracker.co.uk##.alert-info.alert
+
 ! 4/18/2019 https://uk.tradingview.com
 uk.tradingview.com##.tv-dialog__modal-body
 uk.tradingview.com##.tv-dialog__modal-container
