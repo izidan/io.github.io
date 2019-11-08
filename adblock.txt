@@ -2,6 +2,10 @@
 twitter.com##.u-lg-size1of4.u-size1of3.Grid-cell
 twitter.com##.js-topbar.topbar
 twitter.com##.SearchNavigation
+twitter.com##.promoted-account
+twitter.com##.promoted-tweet
+twitter.com##.wtf-module
+twitter.com##.trends
 twitter.com/push_service_worker.js
 ton.twimg.com/*native_bundle*.js
 abs.twimg.com/*video_player*.js

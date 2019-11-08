@@ -124,12 +124,12 @@
     mon_low: "Low",
     mon_open: "Open",
     mon_volume: "Volume",
-    mon_last_trade: "T.Cur",
-    mon_trade_vol: "T.Vol",
-    mon_traded: "T.Time",
+    mon_last_trade: "Last",
+    mon_trade_vol: "Trade",
+    mon_traded: "Traded",
     mon_trade_type: "Typ",
-    mon_trade_high: "T.Hi",
-    mon_trade_low: "T.Lo",
+    mon_trade_high: "Hi",
+    mon_trade_low: "Lo",
     mon_trade_1: "T-1",
     mon_trade_2: "T-2",
     mon_trade_3: "T-3",
@@ -145,7 +145,7 @@
     mon_buy_pc: "Buy%",
     mon_sell_pc: "Sell%",
     mon_unknown_pc: "?%",
-    mon_num_trades: "T.Num",
+    mon_num_trades: "Count",
     mon_flags: "Flags",
     mon_open_change: "O.Chg",
     mon_open_change_pc: "Opn%",
@@ -4444,32 +4444,32 @@
       case 44:
         Env.isFixedMonitor() || (
           e = L("mon_remove_symbol") + a.getName() + " (" + a.getDisplaySymbol() + ")",
-          d = new HTMLIcon(Env.getAdvfnURL() + "/common/images/icons/cross12.png", "Remove", "jstools_del_" + this._genSymbolIdentifier(a).id),
+          d = new HTMLIcon("_close.png", "Remove", "jstools_del_" + this._genSymbolIdentifier(a).id),
           d.addSubscriber(this), d = [d.getHTML(), e], this._groupedGrid.setCellContent(b, c, d), this._symbolsList.updateSymbolValue(a, c, e, d)
         );
         break;
       case 66:
         Env.isFixedMonitor() || (
-          e = a.getName() + " tweets", d = new HTMLIcon("//www.twitter.com/favicon.ico", "Tweets", "jstools_tweets_" + this._genSymbolIdentifier(a).id),
+          e = a.getName() + " tweets", d = new HTMLIcon("_twitter.png", "Tweets", "jstools_tweets_" + this._genSymbolIdentifier(a).id),
           d.addSubscriber(this), d = [d.getHTML(), e], this._groupedGrid.setCellContent(b, c, d), this._symbolsList.updateSymbolValue(a, c, e, d)
         );
         break;
       case 67:
         Env.isFixedMonitor() || (
-          e = a.getName() + " posts", d = new HTMLIcon(Env.getAdvfnURL() + "/favicon.ico", "Posts", "jstools_posts_" + this._genSymbolIdentifier(a).id),
+          e = a.getName() + " posts", d = new HTMLIcon("_chat.png", "Posts", "jstools_posts_" + this._genSymbolIdentifier(a).id),
           d.addSubscriber(this), d = [d.getHTML(), e], this._groupedGrid.setCellContent(b, c, d), this._symbolsList.updateSymbolValue(a, c, e, d)
         );
         break;
       case 68:
         Env.isFixedMonitor() || (
-          e = a.getName() + " chats", d = new HTMLIcon("//www.lse.ac.uk/favicon.ico", "Chats", "jstools_chats_" + this._genSymbolIdentifier(a).id),
+          e = a.getName() + " chats", d = new HTMLIcon("_posts.png", "Chats", "jstools_chats_" + this._genSymbolIdentifier(a).id),
           d.setCssStyle("width: 16px; height: 16px"),
           d.addSubscriber(this), d = [d.getHTML(), e], this._groupedGrid.setCellContent(b, c, d), this._symbolsList.updateSymbolValue(a, c, e, d)
         );
         break;
       case 69:
         Env.isFixedMonitor() || (
-          e = a.getName() + " announcements", d = new HTMLIcon("//www.investegate.co.uk/favicon.ico", "Announcements", "jstools_announcements_" + this._genSymbolIdentifier(a).id),
+          e = a.getName() + " announcements", d = new HTMLIcon("_bell.png", "Announcements", "jstools_announcements_" + this._genSymbolIdentifier(a).id),
           d.addSubscriber(this), d = [d.getHTML(), e], this._groupedGrid.setCellContent(b, c, d), this._symbolsList.updateSymbolValue(a, c, e, d)
         );
         break;

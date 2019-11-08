@@ -47,7 +47,7 @@
                 console.log('market is currently closed.') ||
                     setTimeout(location.reload, (60 - new Date().getMinutes()) * 60000);
             else //if (new Date().getHours() >= 8 && new Date().getHours() <= 16) {
-                setTimeout(()=>location.reload(), 3000);
+                setTimeout(onload, 3000);
             //onload();
         };
 
@@ -104,12 +104,12 @@
             window.lastChangeTimestamp = modelLastChangeTimestamp;
             let hour = new Date().getHours();
             if (app._symbolsList._sortingColumn < 0)
-                app._symbolsList.setSortingColumn(app._cols.map(c => c._title).indexOf(hour > 7 && hour < 17 ? 'T.Time' : 'Ticked'), app._currentSorting);
+                app._symbolsList.setSortingColumn(app._cols.map(c => c._title).indexOf(hour > 7 && hour < 17 ? 'Traded' : 'Ticked'), app._currentSorting);
             app._groupedGrid.sortGrid();
             app._fixStaticCells()
             Env.getSession()._root._refresh();
             document.title = Object.values(app._monitorModel)
-                .sort((a, b) => (b.cols[app._symbolsList._sortingColumn]||{currentValue:''}).currentValue.localeCompare((a.cols[app._symbolsList._sortingColumn]||{currentValue:''}).currentValue))
+                .sort((a, b) => (b.cols[app._symbolsList._sortingColumn] || { currentValue: '' }).currentValue.localeCompare((a.cols[app._symbolsList._sortingColumn] || { currentValue: '' }).currentValue))
                 .reduce((t, c) => c.cols[4] ? t + ', ' + c.symbol._name + ': ' + c.cols[4].currentValue : t, '').substr(2);
         };
 
