@@ -4444,32 +4444,32 @@
       case 44:
         Env.isFixedMonitor() || (
           e = L("mon_remove_symbol") + a.getName() + " (" + a.getDisplaySymbol() + ")",
-          d = new HTMLIcon("_close.png", "Remove", "jstools_del_" + this._genSymbolIdentifier(a).id),
+          d = new HTMLIcon("img_remove.png", "Remove", "jstools_del_" + this._genSymbolIdentifier(a).id),
           d.addSubscriber(this), d = [d.getHTML(), e], this._groupedGrid.setCellContent(b, c, d), this._symbolsList.updateSymbolValue(a, c, e, d)
         );
         break;
       case 66:
         Env.isFixedMonitor() || (
-          e = a.getName() + " tweets", d = new HTMLIcon("_twitter.png", "Tweets", "jstools_tweets_" + this._genSymbolIdentifier(a).id),
+          e = a.getName() + " tweets", d = new HTMLIcon("img_tweets.png", "Tweets", "jstools_tweets_" + this._genSymbolIdentifier(a).id),
           d.addSubscriber(this), d = [d.getHTML(), e], this._groupedGrid.setCellContent(b, c, d), this._symbolsList.updateSymbolValue(a, c, e, d)
         );
         break;
       case 67:
         Env.isFixedMonitor() || (
-          e = a.getName() + " posts", d = new HTMLIcon("_chat.png", "Posts", "jstools_posts_" + this._genSymbolIdentifier(a).id),
+          e = a.getName() + " posts", d = new HTMLIcon("img_chats.png", "Posts", "jstools_posts_" + this._genSymbolIdentifier(a).id),
           d.addSubscriber(this), d = [d.getHTML(), e], this._groupedGrid.setCellContent(b, c, d), this._symbolsList.updateSymbolValue(a, c, e, d)
         );
         break;
       case 68:
         Env.isFixedMonitor() || (
-          e = a.getName() + " chats", d = new HTMLIcon("_posts.png", "Chats", "jstools_chats_" + this._genSymbolIdentifier(a).id),
+          e = a.getName() + " chats", d = new HTMLIcon("img_posts.png", "Chats", "jstools_chats_" + this._genSymbolIdentifier(a).id),
           d.setCssStyle("width: 16px; height: 16px"),
           d.addSubscriber(this), d = [d.getHTML(), e], this._groupedGrid.setCellContent(b, c, d), this._symbolsList.updateSymbolValue(a, c, e, d)
         );
         break;
       case 69:
         Env.isFixedMonitor() || (
-          e = a.getName() + " announcements", d = new HTMLIcon("_bell.png", "Announcements", "jstools_announcements_" + this._genSymbolIdentifier(a).id),
+          e = a.getName() + " announcements", d = new HTMLIcon("img_news.png", "Announcements", "jstools_announcements_" + this._genSymbolIdentifier(a).id),
           d.addSubscriber(this), d = [d.getHTML(), e], this._groupedGrid.setCellContent(b, c, d), this._symbolsList.updateSymbolValue(a, c, e, d)
         );
         break;
