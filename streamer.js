@@ -4463,7 +4463,6 @@
       case 68:
         Env.isFixedMonitor() || (
           e = a.getName() + " chats", d = new HTMLIcon("img_posts.png", "Chats", "jstools_chats_" + this._genSymbolIdentifier(a).id),
-          d.setCssStyle("width: 16px; height: 16px"),
           d.addSubscriber(this), d = [d.getHTML(), e], this._groupedGrid.setCellContent(b, c, d), this._symbolsList.updateSymbolValue(a, c, e, d)
         );
         break;
@@ -4912,6 +4911,7 @@
     var c = a.getId().split("_")[1],
       d = a.getId().split("_")[2],
       d = this._getSymbolIdentifier(d).symbol;
+    console.log(c);
     switch (c) {
       case "del":
         this.removeRow(d);
@@ -4920,7 +4920,7 @@
         window.open('//uk.advfn.com/cmn/fbb/threads.php3?symbol=' + d.getSymbol(), '_blank');
         break;
       case "tweets":
-        window.open('//mobile.twitter.com/search?f=live&l=en&q=%23' + d.getSymbol(), '_blank');
+        window.open('//mobile.twitter.com/search?f=live&l=en&q=lang:en %23' + d.getSymbol(), '_blank');
         break;
       case "chats":
         window.open('//m.lse.co.uk/markets/shareprice/chat.asp?share=' + d.getSymbol(), '_blank');
