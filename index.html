@@ -10,13 +10,14 @@
     <link rel="shortcut icon" href="https://uk.advfn.com/favicon.ico" type="image/x-icon" />
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="streamer-obfuscated.js"></script>
+    <script src="string.js"></script>
     <script>
         if (typeof jQuery === "undefined" || jQuery === null)
             location.reload(true);
         const params = new URLSearchParams(location.search);
         const symbols = params.get('q').split(',');
-        const username = params.get('u') || 'thro1940';
-        const password = username.replace(/i/gi, '1').replace(/o/gi, '0').replace(/^\w/, t => t.toUpperCase());
+        const username = params.get('u') || ''.random();
+        const password = username.random();
         const websocket = new WebSocket("wss://connect.websocket.in/advfn_com?room_id=" + username);
 
         websocket.onmessage = msg => reset(msg.data);

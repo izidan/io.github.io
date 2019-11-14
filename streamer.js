@@ -4934,7 +4934,7 @@
     var lookups = new SymbolLookup();
     return {
       class: "MonitorConfig",
-      columns: [67, 66, 41, 1, 13, 4, 6, 8, 12, 15, 38, 18, 17, 27, 28, 29, 26, 62, 34, 14, 68, 69],
+      columns: [41, 67, 66, 1, 13, 4, 6, 8, 12, 15, 38, 18, 17, 27, 28, 29, 26, 62, 34, 14, 68, 69],
       symbols: Env.getMonitorSettings().symbols.map(lookups.mock)
     };
   };
