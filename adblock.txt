@@ -1,3 +1,22 @@
+*##[id*=modal]
+*##[id*=share]
+*##[id*=signup]
+*##[id*=gpt-ad]
+*##[id*=social]
+*##[id*=footer]
+*##[id*=cookie]
+*##[id*=taboola]
+*##[id*=comments]
+*##[id*=subscribe]
+*##[class*=mash]
+*##[class*=modal]
+*##[class*=share]
+*##[class*=signup]
+*##[class*=cookie]
+*##[class*=advert]
+*##img[src*=".gif"]
+*##a[rel=nofollow][target=_blank]
+
 ! 3/15/2019 https://twitter.com
 twitter.com##.u-lg-size1of4.u-size1of3.Grid-cell
 twitter.com##.js-topbar.topbar
