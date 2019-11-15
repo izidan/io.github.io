@@ -86,9 +86,6 @@
         };
 
         function app(screenName, sessionId, symbols) {
-            console.log(widget.options);
-            widget.options.symbol = 'LSE:' + symbols[0];
-            widget.reload();
             let session = Env.getSession();
             let config = {
                 site: 'uk',
@@ -119,7 +116,9 @@
                 session._bootConfiguration.displaySymbol = 'LSE:' + symbols[0];
                 session = new Session(session._username, session._sid, session._bootConfiguration);
             } else session = new Session(screenName, localStorage[username] = sessionId, config);
+            widget.options.symbol = 'LSE:' + symbols[0];
             Env.setSession(session);
+            widget.reload();
             session.start();
         }
 
