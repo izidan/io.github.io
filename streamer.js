@@ -535,14 +535,14 @@
     if (null === this._currentApp) {
       switch (Env.getAppName()) {
         case "trades":
-          console.info("Booting Trades App");
+          //console.info("Booting Trades App");
           Env.setFeedSymbol(decodeURIComponent(this._bootConfiguration.feedSymbol));
           DOMAlert.sendSymbol(Env.getSymbol());
           this._currentApp = new TradesApp("trades_app", Env.getSymbol());
           this._currentApp.setBounds(0, 0, TradesApp.WIDTH, TradesApp.HEIGHT_GAP);
           break;
         case "monitor":
-          console.info("Booting Monitor App");
+          //console.info("Booting Monitor App");
           this._currentApp = new MonitorApp("monitorApp");
           break;
         default:

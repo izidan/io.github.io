@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="https://uk.advfn.com/favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="https://uk.advfn.com/favicon.ico" type="image/x-icon" />
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="streamer-obfuscated.js"></script>
     <script src="string.js"></script>
     <script>
@@ -110,29 +110,18 @@
             app._fixStaticCells()
             Env.getSession()._root._refresh();
             document.title = Object.values(app._monitorModel)
-                .sort((a, b) => (b.cols[app._symbolsList._sortingColumn] || { currentValue: '' }).currentValue.localeCompare((a.cols[app._symbolsList._sortingColumn] || { currentValue: '' }).currentValue))
+                .sort((a, b) => (b.cols[app._symbolsList._sortingColumn] || { currentValue: '' }).currentValue
+                    .localeCompare((a.cols[app._symbolsList._sortingColumn] || { currentValue: '' }).currentValue))
                 .reduce((t, c) => c.cols[4] ? t + ', ' + c.symbol._name + ': ' + c.cols[4].currentValue : t, '').substr(2);
         };
 
         window.onselect = function (epic) {
             var iframe = document.getElementById('tradesApp');
             if (!iframe) {
-                return $(`<iframe frameborder="0" scrolling="no" id="tradesApp" src="feed.html?q=${epic}&u=${Env.getSession()._username}&s=${Env.getSession()._sid}"></iframe><br/>`
-                    //+ '<img id="chart" style="margin-top:3px; margin-left:-1px", src="https://uk.advfn.com/p.php?pid=staticchart&height=' + (Math.round($.vw.wd / 3)) + '&width=' + ($.vw.wd + 17) + '&t=6&vol=1&p=5&dm=2&s=L^' + epic + '"><br/>'
-                ).appendTo('#jsToolRoot');
+                return $(`<iframe frameborder="0" scrolling="no" id="tradesApp" src="feed.html?q=${epic}&u=${Env.getSession()._username}&s=${Env.getSession()._sid}">
+                    </iframe><br/>`).appendTo('#jsToolRoot');
             }
-            //$('#chart').attr('src', (ref = $('#chart').attr('src')) != null ? ref.replace(/&s=[\w|\^]*/, '&s=L^' + epic) : void 0);
-            iframe = iframe.contentWindow;
-            var s = iframe.Env.getSession();
-            if (s._currentApp != null) {
-                s._currentApp.clearState();
-                s._currentApp._createTradesTable();
-            }
-            s._bootConfiguration.feedSymbol = 'L^' + epic;
-            s._bootConfiguration.displaySymbol = 'LSE:' + epic;
-            s = new iframe.Session(s._username, s._sid, s._bootConfiguration);
-            iframe.Env.setSession(s);
-            s.start();
+            iframe.contentWindow.app(undefined, undefined, [epic]);
         };
 
         setInterval(function () {
