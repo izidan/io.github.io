@@ -138,3 +138,7 @@ uk.advfn.com###notification-zone
 uk.advfn.com###videoAdvert
 uk.advfn.com##.fsa-message
 uk.advfn.com##.responsive-footer
+uk.advfn.com###header-container
+uk.advfn.com###navbar
+uk.advfn.com##.addnewsalertbutton
+uk.advfn.com##.PrintButton
