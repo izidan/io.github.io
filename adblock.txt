@@ -1,3 +1,4 @@
+! Title: Trading Bulletin Boards
 *##[id*=modal]
 *##[id*=share]
 *##[id*=signup]
@@ -142,3 +143,5 @@ uk.advfn.com###header-container
 uk.advfn.com###navbar
 uk.advfn.com##.addnewsalertbutton
 uk.advfn.com##.PrintButton
+uk.advfn.com###uk-fp-middle > tbody > tr:nth-of-type(2)
+uk.advfn.com##tr:nth-of-type(3) > td.col-left:nth-of-type(1)
