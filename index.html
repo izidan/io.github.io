@@ -117,11 +117,11 @@
         };
 
         function zonebourse(code) {
-            return `https://www.zonebourse.com/zbcache/charts/ObjectChart.aspx?Type=Custom&Intraday=1&Width=${innerWidth}&Height=${Math.round(0.6 * innerWidth)}&Cycle=DAY1&Duration=6&TopMargin=10&Render=Candle&ShowName=1&Company=4Traders_us&Name=${code}`
+            return `https://www.zonebourse.com/zbcache/charts/ObjectChart.aspx?Width=${Math.min(innerWidth, 800)}&Height=${Math.round(Math.min(0.6 * innerWidth, 800))}&Type=Custom&Intraday=1&Cycle=DAY1&Duration=6&TopMargin=10&Render=Candle&ShowName=1&Company=4Traders_us&Name=${code}`
         }
 
         function staticchart(epic) {
-            return `https://uk.advfn.com/p.php?pid=staticchart&height=${Math.round(0.35 * innerWidth)}&width=${innerWidth}&t=6&vol=1&p=5&dm=2&s=L^${epic}`;
+            return `https://uk.advfn.com/p.php?pid=staticchart&height=${Math.round(Math.min(0.35 * innerWidth, 600))}&width=${Math.min(innerWidth, 800)}&t=6&vol=1&p=5&dm=2&s=L^${epic}`;
         }
 
         window.onselect = function (epic) {
