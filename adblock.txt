@@ -1,3 +1,4 @@
+! Title: Trading Bulletin Boards
 *##[id*=modal]
 *##[id*=share]
 *##[id*=signup]
@@ -6,8 +7,9 @@
 *##[id*=footer]
 *##[id*=cookie]
 *##[id*=taboola]
-*##[id*=comments]
-*##[id*=subscribe]
+*##[id*=comment]
+*##[id*=subscri]
+*##[class*=ads-]
 *##[class*=mash]
 *##[class*=modal]
 *##[class*=share]
@@ -46,10 +48,19 @@ uk.tradingview.com##.tv-dialog__modal-wrap
 uk.tradingview.com##.tv-dialog__overlay
 
 ! 5/16/2019 https://share-dealing.iwebsharedealing.co.uk
-share-dealing.iwebsharedealing.co.uk##.promo.research-box.col-md-4.col-xs-12
-share-dealing.iwebsharedealing.co.uk##.news-box.display-box
-share-dealing.iwebsharedealing.co.uk##.pull-left.footer
-share-dealing.iwebsharedealing.co.uk##div.promo
+share-dealing.iwebsharedealing.co.uk##.news-box
+share-dealing.iwebsharedealing.co.uk##.footer
+share-dealing.iwebsharedealing.co.uk##.promo
+iwebsharedealing.co.uk##.news-box
+iwebsharedealing.co.uk##.footer
+iwebsharedealing.co.uk##.promo
+
+! 11/16/2019 https://www.investegate.co.uk
+www.investegate.co.uk###indicesChart
+www.investegate.co.uk###subMenu
+www.investegate.co.uk###top
+www.investegate.co.uk##.topLinks
+www.investegate.co.uk###bottomContainer
 
 ! 7/4/2019 https://www.lse.co.uk
 lse.co.uk##iframe
@@ -138,3 +149,8 @@ uk.advfn.com###notification-zone
 uk.advfn.com###videoAdvert
 uk.advfn.com##.fsa-message
 uk.advfn.com##.responsive-footer
+uk.advfn.com###header-container
+uk.advfn.com###navbar
+uk.advfn.com##.addnewsalertbutton
+uk.advfn.com##.PrintButton
+uk.advfn.com###uk-fp-middle > tbody > tr:nth-of-type(2)
