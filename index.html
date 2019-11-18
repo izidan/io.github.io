@@ -14,6 +14,7 @@
     <script>
         if (typeof jQuery === "undefined" || jQuery === null)
             location.reload(true);
+        const id4t = {};
         const params = new URLSearchParams(location.search);
         const symbols = params.get('q').split(',');
         const username = params.get('u') || ''.random();
@@ -115,22 +116,36 @@
                 .reduce((t, c) => c.cols[4] ? t + ', ' + c.symbol._name + ': ' + c.cols[4].currentValue : t, '').substr(2);
         };
 
+        function zonebourse(code) {
+            return `https://www.zonebourse.com/zbcache/charts/ObjectChart.aspx?Type=Custom&Intraday=1&Width=${innerWidth}&Height=${Math.round(0.6 * innerWidth)}&Cycle=DAY1&Duration=6&TopMargin=10&Render=Candle&ShowName=1&Company=4Traders_us&Name=${code}`
+        }
+
+        function staticchart(epic) {
+            return `https://uk.advfn.com/p.php?pid=staticchart&height=${Math.round(0.35 * innerWidth)}&width=${innerWidth}&t=6&vol=1&p=5&dm=2&s=L^${epic}`;
+        }
+
         window.onselect = function (epic) {
-            var iframe = document.getElementById('tradesApp');
+            let iframe = document.getElementById('tradesApp');
             if (!iframe) {
                 return $(`<iframe frameborder="0" scrolling="no" id="tradesApp" src="feed.html?q=${epic}&u=${Env.getSession()._username}&s=${Env.getSession()._sid}">
-                    </iframe><br/>`).appendTo('#jsToolRoot');
+                    </iframe><br/><img id="m4t" style="margin-left:-7px" src="${zonebourse(id4t[epic])}"><br/>
+                    <img id="chart" style="margin-top:3px; margin-left:-1px" src="${staticchart(epic)}"><br/>`).appendTo('#jsToolRoot');
             }
+            fetch('https:/cors-anywhere.herokuapp.com/www1.zonebourse.com:443/mods_a/charts/TV/function/search?query=' + epic)
+                .then(res => res.json()).then(json => json.filter(s => s.symbol === epic && s.exchange.match(/gb\.png/))[0])
+                .then((zb = {}) => $("#m4t").attr('src', zonebourse(id4t[epic] = zb.full_name)));
             iframe.contentWindow.app(undefined, undefined, [epic]);
+            $('#chart').attr('src', staticchart(epic));
         };
 
         setInterval(function () {
             let iframe = document.getElementById('tradesApp')
             if (iframe && iframe.contentDocument.body) {
                 iframe.style.height = $(document.getElementById('tradesApp').contentDocument.body).css('height');
+                //iframe.style.height = iframe.contentDocument.body.scrollHeight + 'px'
                 iframe.style.width = iframe.contentDocument.body.scrollWidth + 'px';
             }
-            $('#jsToolRoot,#wm').css('height', $('#monitorApp_groupedGrid_grid').css('height'));
+            //$('#jsToolRoot,#wm').css('height', $('#monitorApp_groupedGrid_grid').css('height'));
             resort();
         }, 1000);
 
