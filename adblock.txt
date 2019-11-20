@@ -13,20 +13,25 @@
 *##[class*=mash]
 *##[class*=modal]
 *##[class*=share]
+*##[class*=trends]
 *##[class*=signup]
+*##[class*=footer]
 *##[class*=cookie]
 *##[class*=advert]
+*##[class*=promote]
 *##img[src*=".gif"]
 *##a[rel=nofollow][target=_blank]
 
 ! 3/15/2019 https://twitter.com
-twitter.com##.u-lg-size1of4.u-size1of3.Grid-cell
 twitter.com##.js-topbar.topbar
 twitter.com##.SearchNavigation
-twitter.com##.promoted-account
-twitter.com##.promoted-tweet
-twitter.com##.wtf-module
-twitter.com##.trends
+*##.u-lg-size1of4.u-size1of3.Grid-cell
+*##.r-1g40b8q > div:nth-of-type(1)
+*##.wtf-module
+*##.r-1pz39u2
+*##.r-1joea0r
+*##.r-1xcajam
+*##.r-1w6e6rj
 twitter.com/push_service_worker.js
 ton.twimg.com/*native_bundle*.js
 abs.twimg.com/*video_player*.js
@@ -56,11 +61,16 @@ iwebsharedealing.co.uk##.footer
 iwebsharedealing.co.uk##.promo
 
 ! 11/16/2019 https://www.investegate.co.uk
+www.investegate.co.uk###bottomContainer
 www.investegate.co.uk###indicesChart
 www.investegate.co.uk###subMenu
 www.investegate.co.uk###top
 www.investegate.co.uk##.topLinks
-www.investegate.co.uk###bottomContainer
+investegate.co.uk###bottomContainer
+investegate.co.uk###indicesChart
+investegate.co.uk###subMenu
+investegate.co.uk###top
+investegate.co.uk##.topLinks
 
 ! 7/4/2019 https://www.lse.co.uk
 lse.co.uk##iframe

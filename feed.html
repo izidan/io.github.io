@@ -21,7 +21,7 @@
         const params = new URLSearchParams(location.search);
         const symbols = params.get('q').split(',');
         const username = params.get('u') || ''.random();
-        const password = username.random();
+        const password = params.get('p') || username.random();
         const websocket = new WebSocket("wss://connect.websocket.in/advfn_com?room_id=" + username);
         /*const widget = new TradingView.widget({
             "container_id": "tradingview", "height": 300, "width": "100%", "locale": "uk",
