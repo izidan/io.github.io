@@ -6,7 +6,6 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta http-equiv="Cache-control" content="max-age=604800, public">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="icon" href="https://uk.advfn.com/favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="https://uk.advfn.com/favicon.ico" type="image/x-icon" />
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="streamer-obfuscated.js"></script>
@@ -124,13 +123,13 @@
             return `https://uk.advfn.com/p.php?pid=staticchart&width=${Math.min(innerWidth, 800)}&height=${Math.round(Math.min(innerWidth, 500) * 0.6)}&t=6&vol=1&p=5&dm=2&s=L^${epic}`;
         }
 
-        window.open = window.onselect = function (epic) {
+        window.open = window.onselect = function (epic = 'LLOY') {
             epic = epic.split('/').pop();
             let iframe = document.getElementById('tradesApp');
             if (!iframe) {
                 return $(`<iframe frameborder="0" scrolling="no" id="tradesApp" src="feed.html?q=${epic}&u=${Env.getSession()._username}&s=${Env.getSession()._sid}">
-                    </iframe><br/><img id="zonebourse" style="margin-left:-7px; display:none" src="${zonebourse(zonebourses[epic])}"><br/>
-                    <img id="staticchart" style="margin-top:3px; margin-left:-1px" src="${staticchart(epic)}"><br/>`).appendTo('#jsToolRoot');
+                    </iframe><img id="zonebourse" style="margin-left:-7px;" src="${zonebourse(zonebourses[epic])}">
+                    <img id="staticchart" style="margin-top:3px; margin-left:-1px" src="${staticchart(epic)}">`).appendTo('#jsToolRoot');
             }
             iframe.contentWindow.app(undefined, undefined, [epic]);
             $('#staticchart').attr('src', staticchart(epic));
