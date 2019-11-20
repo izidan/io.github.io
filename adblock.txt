@@ -23,15 +23,23 @@
 *##a[rel=nofollow][target=_blank]
 
 ! 3/15/2019 https://twitter.com
-twitter.com##.js-topbar.topbar
+twitter.com##.js-stream-item:has(.Icon--verified)
+twitter.com##.u-lg-size1of4.u-size1of3.Grid-cell
+twitter.com##.SidebarCommonModules
+twitter.com##.ProfileCanopy-header
 twitter.com##.SearchNavigation
-*##.u-lg-size1of4.u-size1of3.Grid-cell
-*##.r-1g40b8q > div:nth-of-type(1)
-*##.wtf-module
-*##.r-1pz39u2
-*##.r-1joea0r
-*##.r-1xcajam
-*##.r-1w6e6rj
+twitter.com##.js-topbar.topbar
+mobile.twitter.com##.r-1j3t67a:has(.r-4qtqp9.r-jwli3a)
+mobile.twitter.com##.r-1g40b8q > div:nth-of-type(1)
+mobile.twitter.com##.wtf-module
+mobile.twitter.com##.r-1pz39u2
+mobile.twitter.com##.r-1joea0r
+mobile.twitter.com##.r-1xcajam
+mobile.twitter.com##.r-1w6e6rj
+mobile.twitter.com##.r-1w50u8q
+mobile.twitter.com##.r-9qu9m4
+mobile.twitter.com##.r-aaos50
+mobile.twitter.com##.r-hjejmn
 twitter.com/push_service_worker.js
 ton.twimg.com/*native_bundle*.js
 abs.twimg.com/*video_player*.js
