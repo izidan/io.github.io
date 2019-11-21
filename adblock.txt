@@ -12,7 +12,7 @@
 *##[class*=ads-]
 *##[class*=mash]
 *##[class*=modal]
-*##[class*=share]
+!*##[class*=share]
 *##[class*=trends]
 *##[class*=signup]
 *##[class*=footer]

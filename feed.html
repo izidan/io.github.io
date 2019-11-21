@@ -48,7 +48,7 @@
         function reset(sessionId) {
             if (sessionId === username && !!localStorage[username])
                 return send(localStorage[username]);
-            else if (!!sessionId)
+            else if (!!sessionId && sessionId[0] !== '{')
                 localStorage[username] = sessionId;
             else {
                 delete localStorage[username];
@@ -57,7 +57,7 @@
             if ([0, 6].includes(new Date().getDay()))
                 console.log('market is currently closed in weekend.') ||
                     setTimeout(location.reload, (60 - new Date().getMinutes() + 60 * 23) * 60000);
-            else if ((new Date().getHours() < 8 || new Date().getHours() > 16))
+            else if ((new Date().getHours() < 7 || new Date().getHours() > 16))
                 console.log('market is currently closed.') ||
                     setTimeout(location.reload, (60 - new Date().getMinutes()) * 60000);
             else //if (new Date().getHours() >= 8 && new Date().getHours() <= 16) {
@@ -76,7 +76,7 @@
         };
 
         function login(userName, password) {
-            return fetch('https://cors-anywhere.herokuapp.com/secure.advfn.com:443/mobileAPI/MobileLogin', {
+            return fetch(`https://${'post'.cors()}/secure.advfn.com:443/mobileAPI/MobileLogin`, {
                 method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
                     userName, password, appId: "com.advfn.android.mobile", appVersion: "2.0.5120", locale: "en-GB",
                     deviceToken: "N/A", deviceTokenType: "GCM\/legacy", deviceType: "Android\/8.0.0\/SM-G950F"
