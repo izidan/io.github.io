@@ -70,7 +70,7 @@
                 app(username, localStorage[username], symbols);
             else
                 login(username, password)
-                    .then(json => app(json.screenName, json.sessionId, symbols))
+                    .then(json => json ? app(json.screenName, json.sessionId, symbols) : location.reload())
                     .then(() => send(Env.getSession()._sid))
                     .catch(console.error);
         };
