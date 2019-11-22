@@ -1,6 +1,4 @@
 ! Title: Trading Bulletin Boards
-*##[id*=modal]
-*##[id*=share]
 *##[id*=signup]
 *##[id*=gpt-ad]
 *##[id*=social]
@@ -11,8 +9,6 @@
 *##[id*=subscri]
 *##[class*=ads-]
 *##[class*=mash]
-!*##[class*=modal]
-!*##[class*=share]
 *##[class*=trends]
 *##[class*=signup]
 *##[class*=footer]

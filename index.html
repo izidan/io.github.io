@@ -8,164 +8,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="shortcut icon" href="https://uk.advfn.com/favicon.ico" type="image/x-icon" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"> </script>
+    <!--script src="https://www.marketscreener.com/mods_a/charts/TV/charting_library/charting_library.min.js"></script>
+    <script src="https://www.marketscreener.com/mods_a/charts/TV/charting_library/datafeed/udf/datafeed.js"></script>
+    <script src="https://s3.tradingview.com/tv.js"></script-->
     <!--script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"> </script-->
-    <script src="streamer-obfuscated.js"></script>
-    <script src="string.js"></script>
+    <script src="jsx/js/streamer.js"></script>
+    <script src="jsx/js/string.js"></script>
+    <script src="jsx/js/index.js"></script>
     <script>
-        if (typeof jQuery === "undefined" || jQuery === null)
-            location.reload(true);
-        const zonebourses = {};
-        const params = new URLSearchParams(location.search);
-        const symbols = params.get('q').split(',');
-        const username = params.get('u') || ''.random();
-        const password = params.get('p') || username.random();
-        //const websocket = io("https://socket-io-chat.now.sh");
-        const websocket = new WebSocket("wss://connect.websocket.in/advfn_com?room_id=" + username);
-
-        websocket.onmessage = msg => reset(msg.data);
-        //websocket.onmessage = console.log;
-        websocket.onerror = console.error;
-
-        IPC.prototype._handleReconnection = reset;
-
-        function send(msg) {
-            if (websocket.readyState === 1)
-                websocket.send(msg);
-            else
-                setTimeout(send, 1000, msg);
-        }
-
-        function reset(sessionId) {
-            if (sessionId === username && !!localStorage[username])
-                return send(localStorage[username]);
-            else if (!!sessionId && sessionId[0] !== '{')
-                localStorage[username] = sessionId;
-            else {
-                delete localStorage[username];
-                return send(username);
-            }
-            if ([0, 6].includes(new Date().getDay()))
-                console.log('market is currently closed in weekend.') ||
-                    setTimeout(location.reload, (60 - new Date().getMinutes() + 60 * 23) * 60000);
-            else if ((new Date().getHours() < 7 || new Date().getHours() > 16))
-                console.log('market is currently closed.') ||
-                    setTimeout(location.reload, (60 - new Date().getMinutes()) * 60000);
-            else //if (new Date().getHours() >= 8 && new Date().getHours() <= 16) {
-                setTimeout(onload, 3000);
-            //onload();
-        };
-
-        function onload() {
-            if (!!username && !!localStorage[username])
-                app(username, localStorage[username], symbols);
-            else
-                login(username, password)
-                    .then(json => json ? app(json.screenName, json.sessionId, symbols) : location.reload())
-                    .then(() => send(Env.getSession()._sid))
-                    .catch(console.error);
-        };
-
-        function login(userName, password) {
-            return fetch(`https://${'post'.cors()}/secure.advfn.com:443/mobileAPI/MobileLogin`, {
-                method: 'POST', headers: { 'Content-Type': 'application/json', 'Origin': 'uk.advfn.com' }, body: JSON.stringify({
-                    userName, password, appId: "com.advfn.android.mobile", appVersion: "2.0.5120", locale: "en-GB",
-                    deviceToken: "N/A", deviceTokenType: "GCM\/legacy", deviceType: "Android\/8.0.0\/SM-G950F"
-                })
-            }).then(res => res.json()).then(json => json.account);
-        };
-
-        function app(screenName, sessionId, symbols) {
-            let session = new Session(screenName, localStorage[username] = sessionId, {
-                site: 'uk',
-                locale: 'en_GB',
-                monitorId: '1',
-                appName: 'monitor',
-                timezone: 'GB-Eire',
-                indices: ["FTSE:UKX"],
-                timezoneOffset: new Date().getTimezoneOffset() * -60,
-                rpcUrl: '//rpc.advfn.com',
-                feedSymbol: null,
-                displaySymbol: null,
-                advfnUrl: '//uk.advfn.com',
-                streamerUrl: 'wss://streamws.advfn.com',
-                alternativeStreamerUrl: 'ws://streamws.advfn.com:7000',
-                alternativeStreamerUrlFallback: 'ws://streamws.advfn.com:80',
-                colorSchema: { up: '#000090', down: '#CF0000', unchanged: '#008000' },
-                changeArrows: { up: 'blue_up.png', no_change: 'green_dot.png', down: 'red_down.png' },
-                monitorSettings: { indexBreakUp: true, orderSymbols: true, defaultDisplay: "1", symbols: symbols },
-            });
-            Env.setSession(session);
-            session.start();
-            if (!!sessionStorage.onselect)
-                window.onselect(sessionStorage.onselect);
-        }
-
-        function resort() {
-            if (!Env.getSession()) return;
-            let app = Env.getSession()._currentApp;
-            if (!app || !app._monitorModel) return;
-            let modelLastChangeTimestamp = Math.max.apply(Math, Object.values(app._monitorModel).map(m => m.modelLastChangeTimestamp));
-            if (window.lastChangeTimestamp === modelLastChangeTimestamp)
-                return Env.getSession()._root._refresh();
-            window.lastChangeTimestamp = modelLastChangeTimestamp;
-            let hour = new Date().getHours();
-            if (app._symbolsList._sortingColumn < 0)
-                app._symbolsList.setSortingColumn(app._cols.map(c => c._title).indexOf(hour > 7 && hour < 17 ? 'Traded' : 'Ticked'), app._currentSorting);
-            app._groupedGrid.sortGrid();
-            app._fixStaticCells()
-            Env.getSession()._root._refresh();
-            document.title = Object.values(app._monitorModel)
-                .sort((a, b) => (b.cols[app._symbolsList._sortingColumn] || { currentValue: '' }).currentValue
-                    .localeCompare((a.cols[app._symbolsList._sortingColumn] || { currentValue: '' }).currentValue))
-                .reduce((t, c) => c.cols[4] ? t + ', ' + c.symbol._name + ': ' + c.cols[4].currentValue : t, '').substr(2);
-        };
-
-        function zonebourse(epic) {
-            epic = localStorage[epic + 'zb'] || epic;
-            return `https://www.zonebourse.com/zbcache/charts/ObjectChart.aspx?Width=${Math.min(document.body.clientWidth, 800)}&Height=${Math.round(Math.min(document.body.clientWidth, 500))}&Type=Custom&Intraday=1&Cycle=DAY1&Duration=6&TopMargin=10&Render=Candle&ShowCopyright=0&ShowName=1&Company=4Traders_us&Name=${epic}`
-        }
-
-        function staticchart(epic) {
-            return `https://uk.advfn.com/p.php?pid=staticchart&width=${Math.min(document.body.clientWidth, 800)}&height=${Math.round(Math.min(document.body.clientWidth, 500) * 0.6)}&t=6&vol=1&p=5&dm=2&s=L^${epic}`;
-        }
-
-        window.open = window.onselect = function (epic = 'LLOY') {
-            epic = epic.split('/').pop();
-            sessionStorage.onselect = epic;
-            let iframe = document.getElementById('tradesApp');
-            if (!iframe) {
-                return $(`<iframe frameborder="0" scrolling="no" id="tradesApp" src="feed.html?q=${epic}&u=${Env.getSession()._username}&s=${Env.getSession()._sid}">
-                    </iframe><br/><img id="zonebourse" style="margin-left:-7px;" src="${zonebourse(epic)}"><br/>
-                    <img id="staticchart" style="margin-top:3px; margin-left:-1px" src="${staticchart(epic)}">`).appendTo('#jsToolRoot');
-            }
-            iframe.contentWindow.app(undefined, undefined, [epic]);
-            $('#staticchart').attr('src', staticchart(epic));
-            if (!!localStorage[epic + 'zb'])
-                return $("#zonebourse").attr('src', zonebourse(epic)).css('display', 'block');
-            fetch(`https://${'get'.cors()}/www1.zonebourse.com:443/mods_a/charts/TV/function/search?query=${epic}`)
-                .then(res => res.jsonp()).then(json => json.filter(s => s.symbol === epic && s.exchange.match(/gb\.png/))[0])
-                .then((zb = {}) => !(localStorage[epic + 'zb'] = zb.full_name) ? $("#zonebourse").css('display', 'none') :
-                    $("#zonebourse").attr('src', zonebourse(epic)).css('display', 'block'));
-        };
-
-        setInterval(function () {
-            let iframe = document.getElementById('tradesApp')
-            if (iframe && iframe.contentDocument.body) {
-                iframe.style.height = $(document.getElementById('tradesApp').contentDocument.body).css('height');
-                //iframe.style.height = iframe.contentDocument.body.scrollHeight + 'px'
-                iframe.style.width = iframe.contentDocument.body.scrollWidth + 'px';
-            }
-            //$('#jsToolRoot,#wm').css('height', $('#monitorApp_groupedGrid_grid').css('height'));
-            resort();
-        }, 1000);
-
+        /*const widget = new TradingView.widget({
+            "container_id": "tradingview", "height": 300, "width": "100%", "locale": "uk",
+            "hide_top_toolbar": true, "enable_publishing": false, "symbol": 'LSE:' + symbols[0],
+            disabled_features: ["link_to_tradingview", "use_localstorage_for_settings", "header_screenshot", "header_symbol_search", "header_saveload", "telemetry"],
+            interval: "60", timezone: "exchange", theme: "Light", style: "1", "save_image": false, enabled_features: [],
+            //client_id: '4-traders.com', user_id: 'public_user_id',
+            //library_path: "https://www.marketscreener.com/mods_a/charts/TV/charting_library/",
+            //charts_storage_url: 'https://cors-anywhere.herokuapp.com/www1.zonebourse.com/mods_a/charts/TV/function',
+            //datafeed: new Datafeeds.UDFCompatibleDatafeed("https://cors-anywhere.herokuapp.com/www1.zonebourse.com/mods_a/charts/TV/function", 60000)
+        });*/
     </script>
 </head>
 
-<!--body id="jsToolRoot" style='margin:0px; font-family: "Trebuchet MS", Helvetica, sans-serif' scroll='no'></body-->
-
-<body id="jsToolRoot" style='margin:0px; font-family: "Trebuchet MS", Helvetica, sans-serif' scroll='no'
-    onload="onload()">
+<body id="jsToolRoot" style='margin:0px; font-family: "Trebuchet MS", Helvetica, sans-serif' scroll='no'>
 </body>
 
 </html>
