@@ -9,14 +9,14 @@
 *##[id*=subscri]
 *##[class*=ads-]
 *##[class*=mash]
-*##[class*=trends]
+!*##[class*=trends]
 *##[class*=signup]
 *##[class*=footer]
 *##[class*=cookie]
 *##[class*=advert]
 *##[class*=promote]
-*##img[src*=".gif"]
-*##a[rel=nofollow][target=_blank]
+!*##img[src*=".gif"]
+!*##a[rel=nofollow][target=_blank]
 
 ! 3/15/2019 https://twitter.com
 twitter.com##li.js-stream-item:has(.Icon--verified)
@@ -41,9 +41,9 @@ mobile.twitter.com##.r-1pz39u2
 ! hide columns to right
 mobile.twitter.com##.r-1joea0r
 ! hide top search bar
-mobile.twitter.com##.r-1xcajam
+!mobile.twitter.com##.r-1xcajam
 ! hide profile large icon
-mobile.twitter.com##.r-1w6e6rj
+!mobile.twitter.com##.r-1w6e6rj
 ! hide who to follow
 mobile.twitter.com##.r-1w50u8q
 ! hide who to follow show more
@@ -51,17 +51,17 @@ mobile.twitter.com##.r-9qu9m4
 ! hide who to follow spacer
 mobile.twitter.com##.r-aaos50
 ! hide header banner photo
-mobile.twitter.com##.r-hjejmn
+!mobile.twitter.com##.r-hjejmn
 ! extra heading
-mobile.twitter.com##h1.css-4rbku5[role=heading]
+!mobile.twitter.com##h1.css-4rbku5[role=heading]
 mobile.twitter.com###accessible-list-1
 mobile.twitter.com###accessible-list-2
 mobile.twitter.com###accessible-list-3
 mobile.twitter.com###accessible-list-4
 mobile.twitter.com###accessible-list-5
 ! pull to refresh
-mobile.twitter.com##div.r-xp2224
-mobile.twitter.com##div svg[aria-label="Pull to refresh"]
+!mobile.twitter.com##div.r-xp2224
+!mobile.twitter.com##div svg[aria-label="Pull to refresh"]
 twitter.com/push_service_worker.js
 !ton.twimg.com/*native_bundle*.js
 abs.twimg.com/*video_player*.js
