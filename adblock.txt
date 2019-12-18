@@ -7,7 +7,7 @@
 *##[id*=taboola]
 *##[id*=comment]
 *##[id*=subscri]
-*##[class*=ads-]
+!*##[class*=ads-]
 *##[class*=mash]
 !*##[class*=trends]
 *##[class*=signup]
