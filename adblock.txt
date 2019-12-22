@@ -9,14 +9,14 @@
 *##[id*=subscri]
 !*##[class*=ads-]
 *##[class*=mash]
-!*##[class*=trends]
+*##[class*=trends]
 *##[class*=signup]
-*##[class*=footer]
+!*##[class*=footer]
 *##[class*=cookie]
 *##[class*=advert]
 *##[class*=promote]
 !*##img[src*=".gif"]
-!*##a[rel=nofollow][target=_blank]
+*##a[rel=nofollow][target=_blank]
 
 ! 3/15/2019 https://twitter.com
 twitter.com##li.js-stream-item:has(.Icon--verified)
@@ -103,7 +103,7 @@ investegate.co.uk###top
 investegate.co.uk##.topLinks
 
 ! 7/4/2019 https://www.lse.co.uk
-lse.co.uk##iframe
+!lse.co.uk##iframe
 lse.co.uk###sp-nav-sponsorship-ad
 lse.co.uk###by-button-iframe
 lse.co.uk###fancybox-wrap
@@ -124,7 +124,7 @@ lse.co.uk##.share-chat-message__content-info-box:nth-of-type(5)
 ||aas.advfn.com$image
 
 ! 11/6/2019 https://uk.advfn.com
-uk.advfn.com##iframe
+!uk.advfn.com##iframe
 uk.advfn.com###overlay
 uk.advfn.com##[id*=APS_]
 uk.advfn.com##[id*=header_]
